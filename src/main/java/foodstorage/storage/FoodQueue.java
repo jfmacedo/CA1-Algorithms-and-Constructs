@@ -78,7 +78,13 @@ public class FoodQueue implements FoodStorage {
     /** Peek - TODO */
     @Override
     public FoodItem peek() throws StorageEmptyException {
-        throw new UnsupportedOperationException("peek() not implemented yet");
+
+        if (isEmpty()) {
+            throw new StorageEmptyException("Storage is empty.");
+        }
+
+        return items[front];
+
     }
 
     /** Display - TODO */
