@@ -42,10 +42,19 @@ public class FoodQueue implements FoodStorage {
         count = 0;
     }
 
-    /** Enqueue - TODO */
+    /** Enqueue - Time complexity: O(1). */
     @Override
     public void add(FoodItem item) throws StorageFullException {
-        throw new UnsupportedOperationException("add() not implemented yet");
+        if (item == null) {
+            throw new IllegalArgumentException("Food item cannot be null.");
+        }
+        if (isFull()) {
+            throw new StorageFullException("Storage is full (" + items.length
+                    + " trays). Remove an item before adding a new one.");
+        }
+        rear = (rear + 1) % items.length;  // move rear forward, wrapping around
+        items[rear] = item;
+        count++;
     }
 
     /** Dequeue - TODO */
