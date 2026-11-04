@@ -24,9 +24,9 @@ public class FoodQueue implements FoodStorage {
     public static final int DEFAULT_CAPACITY = 8;
 
     private final FoodItem[] items;
-    private int front;  // index of the next item to be removed
-    private int rear;   // index of the last item added
-    private int count;  // how many items are stored now
+    private int front; // index of the next item to be removed
+    private int rear; // index of the last item added
+    private int count; // how many items are stored now
 
     public FoodQueue() {
         this(DEFAULT_CAPACITY);
@@ -52,7 +52,7 @@ public class FoodQueue implements FoodStorage {
             throw new StorageFullException("Storage is full (" + items.length
                     + " trays). Remove an item before adding a new one.");
         }
-        rear = (rear + 1) % items.length;  // move rear forward, wrapping around
+        rear = (rear + 1) % items.length; // move rear forward, wrapping around
         items[rear] = item;
         count++;
     }
@@ -60,7 +60,19 @@ public class FoodQueue implements FoodStorage {
     /** Dequeue - TODO */
     @Override
     public FoodItem remove() throws StorageEmptyException {
-        throw new UnsupportedOperationException("remove() not implemented yet");
+
+        if (isEmpty()) {
+            throw new StorageEmptyException("Storage is empty.");
+        }
+
+        FoodItem removed = items[front];
+        items[front] = null;
+
+        front = (front + 1) % items.length;
+        count--;
+
+        return removed;
+
     }
 
     /** Peek - TODO */
